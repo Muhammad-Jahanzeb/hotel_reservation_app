@@ -1,6 +1,17 @@
 import './GuestLove.css'
+import useFetch from "../../Hooks/useFetch";
+
+function toTitleCase(str) {
+  return str
+    ? str.replace(
+        /\w\S*/g,
+        (txt) => txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase()
+      )
+    : "";
+}
 
 const GuestLove = () => {
+  const { data, loading, error } = useFetch("/api/hotel?featured=true&limit=4");
   return (
     <>
       <div className="guestContainer">
@@ -10,53 +21,28 @@ const GuestLove = () => {
       </div>
       <div className="guestContainer">
         <div className="guestList">
-          <div>
-            <div className="guestCard">
-              <img src = "https://images.unsplash.com/photo-1625244724120-1fd1d34d00f6?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWxzfGVufDB8fDB8fHww"/>
-            </div>
-            <div className="guestText">
-                <span className="hotelName">Aparthotel Stor Miasto</span>
-                <span className="hotelLocation">Madrid</span>
-                <span className="price">Starting from $120</span>
-            </div>
-          </div>
-
-          <div>
-            <div className="guestCard">
-              <img src = "https://images.unsplash.com/photo-1625244724120-1fd1d34d00f6?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWxzfGVufDB8fDB8fHww"/>
-            </div>
-            <div className="guestText">
-                <span className="hotelName">Aparthotel Stor Miasto</span>
-                <span className="hotelLocation">Madrid</span>
-                <span className="price">Starting from $120</span>
-            </div>
-          </div>
-
-          <div>
-            <div className="guestCard">
-              <img src = "https://images.unsplash.com/photo-1625244724120-1fd1d34d00f6?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWxzfGVufDB8fDB8fHww"/>
-            </div>
-            <div className="guestText">
-                <span className="hotelName">Aparthotel Stor Miasto</span>
-                <span className="hotelLocation">Madrid</span>
-                <span className="price">Starting from $120</span>
-            </div>
-          </div>
-
-          <div>
-            <div className="guestCard">
-              <img src = "https://images.unsplash.com/photo-1625244724120-1fd1d34d00f6?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWxzfGVufDB8fDB8fHww"/>
-            </div>
-            <div className="guestText">
-                <span className="hotelName">Aparthotel Stor Miasto</span>
-                <span className="hotelLocation">Madrid</span>
-                <span className="price">Starting from $120</span>
-            </div>
-          </div>
+          {loading
+            ? "Loading, please wait"
+            : data.map((item) => (
+                <div key={item._id}>
+                  <div className="guestCard">
+                    <img src={item.photos[0]} />
+                  </div>
+                  <div className="guestText">
+                    <span className="hotelName">{item.name}</span>
+                    <span className="hotelLocation">
+                      {toTitleCase(item.city)}
+                    </span>
+                    <span className="price">
+                      Starting from ${item.cheapestPrice}
+                    </span>
+                  </div>
+                </div>
+              ))}
         </div>
       </div>
     </>
-  )
+  );
 }
 
 export default GuestLove
