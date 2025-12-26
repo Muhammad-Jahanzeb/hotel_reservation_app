@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faArrowRight, faCircleXmark, faLocation } from '@fortawesome/free-solid-svg-icons'
 import { useContext, useState, useEffect } from 'react'
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useFetch from "../../Hooks/useFetch";
 
 import Navbar from '../../Components/Navbar/Navbar'
@@ -10,15 +10,20 @@ import EmailList from '../../Components/EmailList/EmailList'
 import Footer from '../../Components/Footer/Footer'
 import './Hotel.css'
 import { SearchContext } from '../../context/SearchContext';
+import { AuthContext } from '../../context/AuthContext';
+import ReservationModal from '../../Components/ReservationModal/ReservationModal';
 
 
 const hotel = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const[open, setOpen] = useState(false)
+  const [reservationModal, setReservationModal] = useState(false)
   const [imgIndex, setImgIndex] = useState(0)
   const { data, loading, error } = useFetch(`/api/hotel/${id}`);
   const {dates, options} = useContext(SearchContext)
+  const {user} = useContext(AuthContext)
+  const navigate = useNavigate();
 
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
   function dayDifference(date1, date2) {
@@ -46,6 +51,16 @@ const hotel = () => {
 
     else{
       setImgIndex(photos.length - 1)
+    }
+  }
+
+  const handleClick = () =>{
+    if(user){
+      setReservationModal(true)
+    }
+    else{
+      setReservationModal(false)
+      navigate("/login")
     }
   }
 
@@ -130,7 +145,7 @@ const hotel = () => {
                 <h2>
                   <b>${days * data.cheapestPrice * options.rooms}</b> ({days} nights)
                 </h2>
-                <button className="reserveBookBtn">Reserve or Book Now!</button>
+                <button onClick = {handleClick} className="reserveBookBtn">Reserve or Book Now!</button>
               </div>
             </div>
           </div>
@@ -139,6 +154,7 @@ const hotel = () => {
           <Footer />
         </div>
       }
+      {reservationModal ? <ReservationModal setOpen={reservationModal} hotelId = {id}/>: null}
     </>
   );
 }

@@ -4,7 +4,7 @@ function verifyToken (req,res,next){
     const token = req.cookies.access_token
     //if no token
     if(!token){
-        res.json('You are not authenticate!').status(400)
+        res.json('You are not authenticated!').status(400)
     }
 
     else{

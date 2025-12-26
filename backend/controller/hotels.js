@@ -1,4 +1,5 @@
-const Hotel = require("../models/Hotel");
+const Hotel = require("../models/Hotel")
+const Room = require("../models/Room")
 
 //Create hotel
 const createHotel = async (req, res) => {
@@ -111,6 +112,19 @@ const countByType = async (req, res) => {
   }
 };
 
+const getHotelRooms = async(req, res) =>{
+  try{
+    const hotelId = req.params.id
+    const hotel = await Hotel.findById(hotelId)
+    const rooms = await Promise.all(hotel.rooms.map(roomId => 
+      { return Room.findById(roomId) }
+    ))
+  }
+  catch(error){
+    console.error(`Error in getting hotel rooms: ${error}`);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
 
 module.exports = {
   createHotel,
@@ -119,5 +133,6 @@ module.exports = {
   deleteHotel,
   getOne,
   countByCity,
-  countByType
+  countByType,
+  getHotelRooms
 };

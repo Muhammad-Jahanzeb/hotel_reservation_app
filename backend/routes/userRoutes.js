@@ -6,7 +6,10 @@ const router = express.Router()
 
 router.get('/users', verifyToken, getAll)
 
-router.put('/hotel/:id',updateUser).delete('/hotel/:id',deleteUser).get('/hotel/:id',getOne)
+router
+  .put("/users/:id", updateUser)
+  .delete("/users/:id", deleteUser)
+  .get("/users/:id", getOne);
 
 
 module.exports = router
