@@ -88,7 +88,7 @@ const countByCity = async (req, res) => {
 
     res.status(200).json(hotels);
   } catch (error) {
-    console.log(`Error in getting cout by city ${error}`);
+    console.error(`Error in getting cout by city ${error}`);
   }
 };
 
@@ -119,6 +119,7 @@ const getHotelRooms = async(req, res) =>{
     const rooms = await Promise.all(hotel.rooms.map(roomId => 
       { return Room.findById(roomId) }
     ))
+    res.status(200).json(rooms)
   }
   catch(error){
     console.error(`Error in getting hotel rooms: ${error}`);

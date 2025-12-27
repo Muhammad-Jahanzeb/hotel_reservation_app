@@ -19,7 +19,6 @@ const useFetch =(url) => {
     useEffect(() => {getData(url)}, [url]);
 
     const reFetchData = async(url) =>{
-        console.log("Url:\n", url)
         if(!url) return
         try{
             const response = await axios.get(url)

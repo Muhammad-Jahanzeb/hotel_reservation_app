@@ -43,7 +43,6 @@ const loginUser = async (req, res) => {
     if (checkPassword) {
       const { password, _id, isAdmin, ...otherDetails } = user._doc;
       const token = jwt.sign({ id: _id, isAdmin: isAdmin }, process.env.JWT);
-      console.log(otherDetails);
       res
         .cookie("access_token", token, {
           httpOnly: true,

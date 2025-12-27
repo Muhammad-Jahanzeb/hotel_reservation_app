@@ -68,9 +68,9 @@ const hotel = () => {
     <>
       <Navbar />
       <Header type="list" />
-      {loading ? 
+      {loading ? (
         "Loading ..."
-       : 
+      ) : (
         <div className="hoterlContainter">
           {open ? (
             <div className="slider">
@@ -101,7 +101,9 @@ const hotel = () => {
           <div className="hotelWrapper">
             <div className="titleLine">
               <h1 className="hotelTitle">{data.name}</h1>
-              <button className="hotelBookBtn">Book or Reserve</button>
+              <button onClick={handleClick} className="hotelBookBtn">
+                Book or Reserve
+              </button>
             </div>
             <div className="hotelAddress">
               <FontAwesomeIcon icon={faLocation} />
@@ -111,11 +113,12 @@ const hotel = () => {
               Excellent location - {data.distance}m from center
             </span>
             <span className="hotelPrice">
-              Book a stay over ${data.cheapestPrice} at this property and get a free airport taxi
+              Book a stay over ${data.cheapestPrice} at this property and get a
+              free airport taxi
             </span>
             <div className="hotelImages">
               {data.photos?.map((photo, index) => (
-                <div className="hotelImageContainer">
+                <div key={index} className="hotelImageContainer">
                   <img
                     src={photo}
                     className="hotelImage"
@@ -131,9 +134,7 @@ const hotel = () => {
             <div className="hotelDetialsContainer">
               <div className="detailsText">
                 <h1 className="detailsTitle">{data.title}</h1>
-                <p className="detailsDesc">
-                  {data.desc}
-                </p>
+                <p className="detailsDesc">{data.desc}</p>
               </div>
 
               <div className="detailsPrice">
@@ -143,9 +144,12 @@ const hotel = () => {
                   excellent location score of 9.8.
                 </span>
                 <h2>
-                  <b>${days * data.cheapestPrice * options.rooms}</b> ({days} nights)
+                  <b>${days * data.cheapestPrice * options.rooms}</b> ({days}{" "}
+                  nights)
                 </h2>
-                <button onClick = {handleClick} className="reserveBookBtn">Reserve or Book Now!</button>
+                <button onClick={handleClick} className="reserveBookBtn">
+                  Reserve or Book Now!
+                </button>
               </div>
             </div>
           </div>
@@ -153,8 +157,10 @@ const hotel = () => {
           <EmailList />
           <Footer />
         </div>
-      }
-      {reservationModal ? <ReservationModal setOpen={reservationModal} hotelId = {id}/>: null}
+      )}
+      {reservationModal ? (
+        <ReservationModal setOpen={setReservationModal} hotelId={id} />
+      ) : null}
     </>
   );
 }

@@ -23,6 +23,6 @@ router.get("/countByCity", countByCity);
 
 router.get("/countByType", countByType);
 
-router.get("/rooms/:id", getHotelRooms); //688e2eb687fbcde09ee454c0
+router.get("/hotel/rooms/:id", getHotelRooms); //688e2eb687fbcde09ee454c0
 
 module.exports = router;
