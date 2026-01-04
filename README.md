@@ -9,14 +9,14 @@ A Booking.com-inspired MERN app where users can **search hotels by city + dates*
 
 ## Screenshots
 
-> Put your screenshots in `docs/screenshots/` (example file names below) so GitHub can render them in the README.
-
-![Home](docs/screenshots/main.png)
-![Homes guests love](docs/screenshots/homes-guests-love.png)
-![Search results](docs/screenshots/search-results.png)
-![Hotel details](docs/screenshots/hotel-details.png)
-![Reservation modal](docs/screenshots/reservation-modal.png)
-![Footer](docs/screenshots/footer.png)
+![Home](screenshots/Main.png)
+![Homes guests love](screenshots/GuestsLove.png)
+![Search results](screenshots/Search_1.png)
+![Search results](screenshots/Search_2.png)
+![Hotel details](screenshots/Hotel.png)
+![Reservation modal](screenshots/ReservationModal_1.png)
+![Reservation modal](screenshots/ReservationModal_2.png)
+![Footer](screenshots/Footer.png)
 
 ---
 
@@ -147,8 +147,6 @@ Frontend runs on: `http://localhost:5173`
 | `PORT` | `backend/.env` | Express server port (matches Vite proxy target) |
 | `mongoURI` | `backend/.env` | MongoDB connection string |
 | `JWT` | `backend/.env` | Secret used to sign JWT tokens |
-
-✅ Recommended: commit an example file like `backend/.env.example` and keep real `.env` private.
 
 ---
 
