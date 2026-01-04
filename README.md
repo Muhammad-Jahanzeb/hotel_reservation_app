@@ -9,13 +9,24 @@ A Booking.com-inspired MERN app where users can **search hotels by city + dates*
 
 ## Screenshots
 
+**Home**
 ![Home](screenshots/Main.PNG)
+
+**Homes guests love**
 ![Homes guests love](screenshots/GuestsLove.PNG)
+
+**Search results**
 ![Search results](screenshots/Search_1.PNG)
 ![Search results](screenshots/Search_2.PNG)
+
+**Hotel details**
 ![Hotel details](screenshots/Hotel.PNG)
+
+**Reservation modal**
 ![Reservation modal](screenshots/ReservationModal_1.PNG)
 ![Reservation modal](screenshots/ReservationModal_2.PNG)
+
+**Footer**
 ![Footer](screenshots/Footer.png)
 
 ---
