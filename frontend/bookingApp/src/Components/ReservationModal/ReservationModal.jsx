@@ -4,6 +4,7 @@ import "./ReservationModal.css";
 import useFetch from '../../Hooks/useFetch';
 import { useContext, useState } from 'react';
 import { SearchContext } from '../../context/SearchContext';
+import axios from 'axios';
 
 const ReservationModal = ({ setOpen, hotelId }) => {
   const { data, loading, error } = useFetch(`/api/hotel/rooms/${hotelId}`);
@@ -31,7 +32,6 @@ const ReservationModal = ({ setOpen, hotelId }) => {
     );
   };
 
-
   const handleSelect = (e) => {
     const checked = e.target.checked;
     const value = e.target.value;
@@ -42,8 +42,19 @@ const ReservationModal = ({ setOpen, hotelId }) => {
     );
   };
 
-  const handleClick = () => {
-
+  const handleClick = async () => {
+    try{
+      await Promise.all(
+        selectedRooms.map(roomId => axios.put(`/api/rooms/availability/${roomId}`, {dates: allDates}))
+      )
+      setOpen(false)
+    }
+    catch(error){
+      console.log(
+        "Error in reserving room:",
+        error?.response?.data || error.message
+      );
+    }
   }
 
   return (

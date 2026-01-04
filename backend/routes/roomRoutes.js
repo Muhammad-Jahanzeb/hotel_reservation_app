@@ -4,9 +4,9 @@ const {
   updateRoom,
   deleteRoom,
   getOneRoom,
-  getRooms
+  getRooms,
+  updateRoomAvailability
 } = require("../controller/rooms");
-const {verifyToken} = require('../utils/verifyToken')
 
 const router = express.Router();
 
@@ -20,6 +20,6 @@ router
 
 router.delete("/rooms/:hotelId/:id", deleteRoom)
 
-// router.get("/rooms/:id", )
+router.put("/rooms/availability/:roomId", updateRoomAvailability);
 
 module.exports = router;

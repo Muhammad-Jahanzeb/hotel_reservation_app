@@ -7,9 +7,9 @@ const List = () => {
   );
   return (
     <div className="listContainer">
-      {loading ? 
+      {loading ? (
         "Please wait, the data is loading"
-       : 
+      ) : (
         <div className="cardContainer">
           <div className="listCard">
             <img src="https://images.unsplash.com/photo-1625244724120-1fd1d34d00f6?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWxzfGVufDB8fDB8fHww" />
@@ -20,7 +20,7 @@ const List = () => {
           </div>
 
           <div className="listCard">
-            <img src="https://www.usatoday.com/gcdn/-mm-/2f54c7bf7f0ce2353c2279e55f0a28b27128eb6f/c=114-0-1996-1415/local/-/media/USATODAY/USATODAY/2014/08/13/1407953244000-177513283.jpg" />
+            <img src="https://images.pexels.com/photos/14064612/pexels-photo-14064612.jpeg?_gl=1*1vppt6n*_ga*MjYyNzExMDM3LjE3NjQwMTk4NzI.*_ga_8JE65Q40S6*czE3Njc1NDc5MTIkbzUkZzEkdDE3Njc1NDc5ODYkajU5JGwwJGgw" />
             <div className="textContainer">
               <h1>Madrid</h1>
               <h2>{data[1]} properties</h2>
@@ -35,7 +35,7 @@ const List = () => {
             </div>
           </div>
         </div>
-      }
+      )}
     </div>
   );
 }
