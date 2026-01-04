@@ -1,6 +1,7 @@
 .hoterlContainter{
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
 }
 
@@ -10,6 +11,8 @@
     gap:10px;
     width: 1024px;
     margin-top: 2%;
+    margin-bottom: 0;
+    height: max-content;
 }
 
 .titleLine{
@@ -18,7 +21,7 @@
 }
 
 .hotelBookBtn{
-    background-color:  rgb(5, 71, 91);
+    background-color: rgb(5, 71, 91);
     color: white;
     border: none;
     border-radius: 8px;
@@ -28,7 +31,7 @@
 }
 
 .hotelBookBtn:hover{
-    background-color: rgb(7, 135, 173);;
+    background-color: rgb(7, 135, 173);
 }
 
 .hotelBookBtn:active{
@@ -41,6 +44,10 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    align-items: start;
+    width: 100%;
+    height:500px;
+    overflow: hidden;
 }
 
 .hotelImageContainer{
@@ -50,6 +57,7 @@
 .hotelImage{
     width: 100%;
     object-fit: cover;
+    cursor: pointer;
 }
 
 .hotelTitle{
@@ -77,19 +85,103 @@
     display: flex;
     margin-top: 2%;
     justify-content: space-between;
+    margin-top: 5%;
 }
 
 .detailsTitle{
-    font-size: 200%;
+    font-size: 150%;
     margin: 0;
 }
 
 .detailsText{
-    display: flex;
-    flex-direction: column;
-    background-color: red;
+    flex: 3;
+    margin-right: 2%;
 }
 
 .detailsPrice{
-    background-color: aqua;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    font-size: 90%;
+    background-color: rgb(195, 243, 255);
+    padding: 1%;
+    justify-content: space-between;
+    gap:15px
+}
+
+.detailsPrice>h1{
+   margin: 0;
+   font-size: 120%;
+   color: rgb(63, 63, 63);
+}
+
+.detailsPrice>span{
+    margin: 0;
+    font-size: 90%;
+    color: rgb(95, 95, 95);
+}
+
+.detailsPrice>h2{
+    font-weight: 300;
+}
+
+
+.detailsDesc{
+    font-size: 90%;
+}
+
+.reserveBookBtn{
+    background-color: rgb(5, 71, 91);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+.reserveBookBtn:hover{
+    background-color: rgb(7, 135, 173);
+}
+
+.reserveBookBtn:active{
+    position: relative;
+    top:1px
+}
+
+.slider{
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.459);
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    z-index: 2;
+    position: sticky;
+    top:0;
+    justify-content: center;
+    align-items: center;
+}
+
+.sliderWrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.imageSlider{
+    width: 80%;
+    height: 80%;
+}
+
+.arrow{
+    font-size: 200%;
+    cursor: pointer;
+    margin: 2%;
+}
+
+.cross{
+    position: relative;
+    font-size: 150%;
+    cursor: pointer;
+    margin-top: -40%;
 }

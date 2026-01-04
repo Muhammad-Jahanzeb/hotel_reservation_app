@@ -1,0 +1,66 @@
+.reserve{
+    width:100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.418);
+    position:fixed;
+    top:0;
+    left:0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rContainer{
+    background-color: white;
+    padding: 20px;
+    position: relative;
+    border-radius: 10px;
+}
+
+.rClose {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  padding: 1%;
+}
+
+.rItem{
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    padding: 20px;
+}
+
+.rTitle {
+  font-weight: 500;
+}
+
+.rDesc {
+  font-weight: 300;
+}
+
+.rMax {
+  font-size: 12px;
+}
+
+.rPrice {
+  font-weight: 500;
+}
+
+.rButton{
+    background-color: rgb(5, 71, 91);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-bottom: 1%;
+    padding-top: 1%;
+    width: 100%;
+}
+
+.rButton:hover{
+    background-color: rgb(7, 135, 173);
+}

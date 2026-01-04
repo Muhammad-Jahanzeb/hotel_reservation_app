@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { format } from 'date-fns';
 import { DateRange } from 'react-date-range';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -8,6 +8,7 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import { useNavigate } from 'react-router-dom';
 
 import './Header.css'
+import { SearchContext } from '../../context/SearchContext';
 
 const Header = (props) => {
     const {type} = props
@@ -29,6 +30,7 @@ const Header = (props) => {
         rooms:1
     })
 
+    const {dispatch} = useContext(SearchContext)
 
     const toggleClick=()=>{
         setClicked(!clicked)
@@ -54,7 +56,13 @@ const Header = (props) => {
 
     const handleSearch=()=>{
         try{
-            navigate("/list", {state:{destination, date, people}})
+            dispatch({
+              type: "NEW_SEARCH",
+              payload: { city: destination, dates: date, options: people },
+            });
+            navigate("/list", {
+              state: { city: destination, dates: date, options: people },
+            });
         }
         catch(error){
             console.log("Error in handling search.\nError: ", error)

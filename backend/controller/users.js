@@ -6,7 +6,6 @@ const getAll = async(req,res)=>{
     
     try{
         const user = req.user
-        console.log(user)
         if(user.isAdmin){
             const users = await User.find()
             res.json(users).status(200)

@@ -1,74 +1,168 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeft, faArrowRight, faCircleXmark, faLocation } from '@fortawesome/free-solid-svg-icons'
+import { useContext, useState, useEffect } from 'react'
+import { useLocation, useNavigate } from "react-router-dom";
+import useFetch from "../../Hooks/useFetch";
+
 import Navbar from '../../Components/Navbar/Navbar'
 import Header from '../../Components/Header/Header'
+import EmailList from '../../Components/EmailList/EmailList'
+import Footer from '../../Components/Footer/Footer'
 import './Hotel.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLocation, faPhotoFilm } from '@fortawesome/free-solid-svg-icons'
+import { SearchContext } from '../../context/SearchContext';
+import { AuthContext } from '../../context/AuthContext';
+import ReservationModal from '../../Components/ReservationModal/ReservationModal';
+
 
 const hotel = () => {
-  const photos =[{
-    src : "https://media.istockphoto.com/id/1390233984/photo/modern-luxury-bedroom.jpg?s=612x612&w=0&k=20&c=po91poqYoQTbHUpO1LD1HcxCFZVpRG-loAMWZT7YRe4="
-  },
-  {
-    src: "https://blog.kitchenandbathclassics.com/hubfs/hotel%20bathroom%20mayfair%20king%20suite.jpg"
-  },
-  {
-    src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/565551468.jpg?k=90afc3e77a64e0b822af1b90e546744517c1d6e2dd7ecec67b3f5aacf076cbb2&o=&hp=1"
-  },
-  {
-    src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/565553153.jpg?k=58d0ebba9d636501ec9f6982da310acf2f32135557ee15bfeddf9ea70ee2d6de&o=&hp=1"
-  },
-  {
-    src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/565435457.jpg?k=63f17e55223a7f5a690acdd2319edf623d9aaf5b94ab5b36ce775328f26468db&o=&hp=1"
-  },
-  {
-    src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/416962611.jpg?k=9cedc55457d1213fa66d49fd0d4c4e1f638edbf2fee42c6f7ad53072266f68cb&o=&hp=1"
-  }]
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+  const[open, setOpen] = useState(false)
+  const [reservationModal, setReservationModal] = useState(false)
+  const [imgIndex, setImgIndex] = useState(0)
+  const { data, loading, error } = useFetch(`/api/hotel/${id}`);
+  const {dates, options} = useContext(SearchContext)
+  const {user} = useContext(AuthContext)
+  const navigate = useNavigate();
+
+  const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
+  function dayDifference(date1, date2) {
+    const timeDiff = Math.abs(date2.getTime() - date1.getTime());
+    const diffDays = Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
+    return diffDays;
+  }
+
+  const days = dayDifference(dates[0].endDate, dates[0].startDate);
+
+  const incrementIndex = (index) =>{
+    if(index+1 < photos.length){
+      setImgIndex(index + 1)
+    }
+
+    else{
+      setImgIndex(0)
+    }
+  }
+
+  const decrementIndex = (index) =>{
+    if(index > 0){
+      setImgIndex(index-1)
+    }
+
+    else{
+      setImgIndex(photos.length - 1)
+    }
+  }
+
+  const handleClick = () =>{
+    if(user){
+      setReservationModal(true)
+    }
+    else{
+      setReservationModal(false)
+      navigate("/login")
+    }
+  }
 
   return (
     <>
-    <Navbar/>
-    <Header type ="list"/>
-    <div className="hoterlContainter">
-      <div className="hotelWrapper">
-        <div className="titleLine">
-          <h1 className="hotelTitle">Grand Hotel</h1>
-          <button className="hotelBookBtn">Book or Reserve</button>
-        </div>
-        <div className="hotelAddress">
-          <FontAwesomeIcon icon = {faLocation}/>
-          <span>Elton St 125 New York</span>
-        </div>
-        <span className="hotelDistance">Excellent location - 500m from center</span>
-        <span className="hotelPrice">Book a stay over $114 at this property and get a free airport taxi</span>
-        <div className="hotelImages">
-          {photos.map(photo=>(
-            <div className="hotelImageContainer">
-              <img src = {photo.src} className="hotelImage"/>
+      <Navbar />
+      <Header type="list" />
+      {loading ? (
+        "Loading ..."
+      ) : (
+        <div className="hoterlContainter">
+          {open ? (
+            <div className="slider">
+              <div className="sliderWrapper">
+                <FontAwesomeIcon
+                  icon={faArrowLeft}
+                  className="arrow"
+                  onClick={() => decrementIndex(imgIndex)}
+                />
+                <img
+                  src={data.photos[imgIndex]}
+                  alt=""
+                  className="imageSlider"
+                />
+                <FontAwesomeIcon
+                  icon={faArrowRight}
+                  className="arrow"
+                  onClick={() => incrementIndex(imgIndex)}
+                />
+                <FontAwesomeIcon
+                  icon={faCircleXmark}
+                  className="cross"
+                  onClick={() => setOpen(false)}
+                />
+              </div>
             </div>
-          ))}
-        </div>
-
-        <div className="hotelDetialsContainer">
-          <div className="detailsText">
-            <h1 className="detailsTitle">Stay in the heart of Krakow</h1>
-            <p className="detailsDesc">safsaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
-          </div>
-
-          <div className="detailsPrice">
-            <h1>Perfect for a 9-night stay!</h1>
-            <span>
-              Located in the real heart of Krakow, this property has an excellent location score of 9.8.
+          ) : null}
+          <div className="hotelWrapper">
+            <div className="titleLine">
+              <h1 className="hotelTitle">{data.name}</h1>
+              <button onClick={handleClick} className="hotelBookBtn">
+                Book or Reserve
+              </button>
+            </div>
+            <div className="hotelAddress">
+              <FontAwesomeIcon icon={faLocation} />
+              <span>{data.address}</span>
+            </div>
+            <span className="hotelDistance">
+              Excellent location - {data.distance}m from center
             </span>
-            <h2>
-              <b>$945</b> (9 nights)
-            </h2>
-            <button>Reserve or Book Now!</button>
+            <span className="hotelPrice">
+              Book a stay over ${data.cheapestPrice} at this property and get a
+              free airport taxi
+            </span>
+            <div className="hotelImages">
+              {data.photos?.map((photo, index) => (
+                <div key={index} className="hotelImageContainer">
+                  <img
+                    src={photo}
+                    className="hotelImage"
+                    onClick={() => {
+                      setOpen(true);
+                      setImgIndex(index);
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className="hotelDetialsContainer">
+              <div className="detailsText">
+                <h1 className="detailsTitle">{data.title}</h1>
+                <p className="detailsDesc">{data.desc}</p>
+              </div>
+
+              <div className="detailsPrice">
+                <h1>Perfect for a {days} stay!</h1>
+                <span>
+                  Located in the real heart of Krakow, this property has an
+                  excellent location score of 9.8.
+                </span>
+                <h2>
+                  <b>${days * data.cheapestPrice * options.rooms}</b> ({days}{" "}
+                  nights)
+                </h2>
+                <button onClick={handleClick} className="reserveBookBtn">
+                  Reserve or Book Now!
+                </button>
+              </div>
+            </div>
           </div>
+
+          <EmailList />
+          <Footer />
         </div>
-      </div>
-    </div>
+      )}
+      {reservationModal ? (
+        <ReservationModal setOpen={setReservationModal} hotelId={id} />
+      ) : null}
     </>
-  )
+  );
 }
 
 export default hotel
